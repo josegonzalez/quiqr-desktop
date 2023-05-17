@@ -52,18 +52,19 @@ class Sidebar extends React.Component{
     }
 
     return (
-      <ListItem
+      <React.Fragment
         key={"itemFlat"+item.label}
-        selected={item.selected}
-        onClick={ item.onClick }
-        button>
-        {icon}
-        <ListItemText primary={item.label} />
-        {secondaryAction}
+      >
         {secondaryActionMenu}
-
-
-      </ListItem>
+        <ListItem
+          selected={item.selected}
+          onClick={ item.onClick }
+          button>
+          {icon}
+          <ListItemText primary={item.label} secondary={item.labelSecondary} />
+          {secondaryAction}
+        </ListItem>
+      </React.Fragment>
     )
 
   }

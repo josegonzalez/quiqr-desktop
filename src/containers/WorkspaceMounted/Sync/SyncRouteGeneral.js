@@ -1,24 +1,25 @@
 import React                   from 'react';
 import { Route }               from 'react-router-dom';
-import service                 from './../../../services/service';
 import { withStyles }          from '@material-ui/core/styles';
-import MainPublishCard         from './components/MainPublishCard';
-import SyncServerDialog        from './components/SyncServerDialog';
-import SyncBusyDialog          from './components/SyncBusyDialog';
 import IconButton              from '@material-ui/core/IconButton';
 import MoreVertIcon            from '@material-ui/icons/MoreVert';
 import Menu                    from '@material-ui/core/Menu';
 import MenuItem                from '@material-ui/core/MenuItem';
 import Button                  from '@material-ui/core/Button';
-import { snackMessageService } from './../../../services/ui-service';
-import SnackbarManager         from './../../../components/SnackbarManager';
+import Box                     from '@material-ui/core/Box';
 import FolderIcon              from '@material-ui/icons/Folder';
 import GitHubIcon              from '@material-ui/icons/GitHub';
+import MainPublishPage         from './components/MainPublishPage';
+import SyncServerDialog        from './components/SyncServerDialog';
+import SyncBusyDialog          from './components/SyncBusyDialog';
+import { snackMessageService } from './../../../services/ui-service';
+import SnackbarManager         from './../../../components/SnackbarManager';
+import service                 from './../../../services/service';
 
 const useStyles = theme => ({
 
   container:{
-    height: '100%'
+    xheight: '100%'
   },
 
   root: {
@@ -234,7 +235,7 @@ class SyncRouteGeneral extends React.Component {
       syncToText = 'Publish to folder';
     }
 
-    return <MainPublishCard
+    return <MainPublishPage
       title={title}
       liveURL={liveUrl}
       repoAdminUrl={repoAdminUrl}
@@ -320,12 +321,14 @@ class SyncRouteGeneral extends React.Component {
 
     if(site.publish.length < 1){
       content = (
+        <Box component="div" style={{
+          }} m={2}>
 
-        <div><p>No sync server is configured. Add one first.</p>
+        <p>No sync server is configured. Add one first.</p>
           <Button onClick={()=>{
             this.history.push(`${this.basePath}/add/x${Math.random()}`)
           }} color="primary" variant="contained">add sync server</Button>
-        </div>
+        </Box>
       )
     }
     else if(site.publish.length === 1){

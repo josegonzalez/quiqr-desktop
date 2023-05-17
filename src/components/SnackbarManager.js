@@ -22,7 +22,7 @@ class SnackbarManager extends React.Component{
           key="snack-message"
           open={ true }
           action={ snackMessage.action }
-          onActionClick={ snackMessage.onActionClick }
+          //onActionClick={ snackMessage.onActionClick }
           message={ snackMessage.message }
           autoHideDuration={ snackMessage.autoHideDuration }
           onClose={ function(){

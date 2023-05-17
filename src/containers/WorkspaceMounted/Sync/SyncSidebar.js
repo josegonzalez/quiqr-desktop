@@ -1,7 +1,5 @@
 import * as React       from 'react';
 import { Route }        from 'react-router-dom';
-import Sidebar          from './../../Sidebar';
-import service          from './../../../services/service';
 import AddIcon          from '@material-ui/icons/Add';
 import FolderIcon       from '@material-ui/icons/Folder';
 import GitHubIcon       from '@material-ui/icons/GitHub';
@@ -9,12 +7,14 @@ import IconButton       from '@material-ui/core/IconButton';
 import MoreVertIcon     from '@material-ui/icons/MoreVert';
 import Menu             from '@material-ui/core/Menu';
 import MenuItem         from '@material-ui/core/MenuItem';
-import SyncServerDialog from './components/SyncServerDialog';
 import Button           from '@material-ui/core/Button';
 import Dialog           from '@material-ui/core/Dialog';
 import DialogActions    from '@material-ui/core/DialogActions';
 import DialogTitle      from '@material-ui/core/DialogTitle';
 import DialogContent    from '@material-ui/core/DialogContent';
+import SyncServerDialog from './components/SyncServerDialog';
+import Sidebar          from './../../Sidebar';
+import service          from './../../../services/service';
 
 export class SyncSidebar extends React.Component {
 
@@ -124,7 +124,6 @@ export class SyncSidebar extends React.Component {
     )
   }
 
-
   deletePublishConfiguration(inkey){
     let encodedSiteKey = this.props.siteKey;
     let encodedWorkspaceKey = this.props.workspaceKey;
@@ -154,12 +153,12 @@ export class SyncSidebar extends React.Component {
     let index = 0;
     site.publish.forEach((publ)=>{
 
-
-      let label, icon
+      let label, icon, labelSecondary;
 
       if(publ.config && publ.config.type === "github" ){
         if(publ.config.title && publ.config.title !== ''){
-          label = publ.config.title;
+          label = 'GitHub';
+          labelSecondary = publ.config.title;
         }
         else{
           label = publ.config.username+"/"+publ.config.repository;
@@ -168,16 +167,19 @@ export class SyncSidebar extends React.Component {
         icon = <GitHubIcon/>
       }
       else if(publ.config && publ.config.type === "folder" ){
-        label = publ.config.path;
+        label = 'Folder';
+        labelSecondary = publ.config.path;
         icon = <FolderIcon/>
       }
 
       label = (label.length >  17 ? `${label.substring(0, 17)}..` : label);
+      labelSecondary = (labelSecondary.length > 20 ? `${labelSecondary.substring(0, 20)}..` : labelSecondary);
       if(label){
         targets.push({
           active: true,
           icon: icon,
           label: label,
+          labelSecondary: labelSecondary,
           secondaryMenu: this.renderMenu(index, publ),
           secondaryButton: this.renderButton(index, publ),
           selected: (this.state.selectedMenuItem===publ.key ? true : false),
